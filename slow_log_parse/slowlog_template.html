@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>MySQL慢语句报告</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>MySQL慢语句报告</h1>
+            <hr>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <!--<th>ID</th>-->
+                    <th>Query_Time</th>
+                    <th>Lock_Time</th>
+                    <th>Rows_Sent</th>
+                    <th>Rows_Exmined</th>
+                    <th>Timestamp</th>
+                    <th>SQL语句</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for t in sql_info %}
+                    {% if t.query_time|float > 40 %}
+                    <tr class="danger">
+                        <td>{{ t.query_time }}s</td>
+                    {% elif t.query_time|float > 20 %}
+                    <tr class="warning">
+                        <td>{{ t.query_time }}s</td>
+                    {% else %}
+                    <tr>
+                        <td>{{ t.query_time }}s</td>
+                    {% endif %}
+                        <td>{{ t.lock_time }}s</td>
+                        <td>{{ t.rows_sent }}</td>
+                        <td>{{ t.rows_examined }}</td>
+                        <td>{{ t.timestamp }}</td>
+                        <td>{{ t.sql }}</td>
+                        <td>
+                        <!-- 按钮触发模态框 -->
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#{{ t.id }}">
+                            查看SQL语句
+                        </button>
+                        </td>
+                    </tr>
+
+                <div class="container-fluid text-center">
+                    <div class="modal fade" id="{{ t.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        ×
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        SQL语句内容
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <code>{{ t.sql }}</code>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">关闭
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <img style="margin:auto" src="{{ pic_info.pic_name }}">
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

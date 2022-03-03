@@ -1,0 +1,78 @@
+/home/db/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 13306  Unix socket: /home/db/mysql/mysql.sock
+Time                 Id Command    Argument
+# Time: 2022-03-03T15:52:16.061992+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 78.065578  Lock_time: 0.000136 Rows_sent: 0  Rows_examined: 0
+use test;
+SET timestamp=1646293936;
+call idata_1();
+# Time: 2022-03-03T15:52:53.727070+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 1.546703  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646293973;
+CREATE TABLE `t_2` (
+  `id` int(11) NOT NULL,
+  `a` int(11) DEFAULT NULL,
+  `b` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `a` (`a`),
+  KEY `b` (`b`)
+) ENGINE=InnoDB;
+# Time: 2022-03-03T15:54:14.490489+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 79.897977  Lock_time: 0.000130 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294054;
+call idata_2();
+# Time: 2022-03-03T15:54:27.906346+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 1.362275  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294067;
+commit;
+# Time: 2022-03-03T15:55:58.962754+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 60.348765  Lock_time: 0.000098 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294158;
+call idata_3();
+# Time: 2022-03-03T15:56:27.495247+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 1.084087  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294187;
+CREATE TABLE `t_4` (
+  `id` int(11) NOT NULL,
+  `a` int(11) DEFAULT NULL,
+  `b` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `a` (`a`),
+  KEY `b` (`b`)
+) ENGINE=InnoDB;
+# Time: 2022-03-03T15:57:16.429556+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 48.445314  Lock_time: 0.000090 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294236;
+call idata_4();
+# Time: 2022-03-03T15:59:24.603318+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 1.191231  Lock_time: 0.000075 Rows_sent: 2500000  Rows_examined: 2500000
+SET timestamp=1646294364;
+select * from t_1 limit 2500000;
+# Time: 2022-03-03T16:01:21.084292+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 15.410753  Lock_time: 0.018069 Rows_sent: 0  Rows_examined: 2000000
+SET timestamp=1646294481;
+insert into t select * from t_1  limit 2000000;
+# Time: 2022-03-03T16:02:25.172958+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 25.760868  Lock_time: 0.014463 Rows_sent: 0  Rows_examined: 2500000
+SET timestamp=1646294545;
+delete from t_1;
+# Time: 2022-03-03T16:03:14.366134+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 26.000381  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1646294594;
+rollback;
+# Time: 2022-03-03T16:05:39.932130+08:00
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 79.565594  Lock_time: 0.013007 Rows_sent: 0  Rows_examined: 2500000
+SET timestamp=1646294739;
+update t_1 set a=100 where b in (select b from t_2);
