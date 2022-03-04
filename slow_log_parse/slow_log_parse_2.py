@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding:UTF-8 -*-
 # @Time     : 2022-03-01 11:00
-# @Author   : codehoese
+# @Author   : codehorse
 # @FileName : slow_log_parse_1.py
 # @description : mysql slowlog parse
 # @email    : xxxxxxxxxxxxx
